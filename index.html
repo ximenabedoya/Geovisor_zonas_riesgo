@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#273746">
+<title>Geovisor de Zonas de Riesgo | Comuna 8 · Villa Hermosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+<header class="topbar">
+<a class="brand" href="#map" aria-label="Geovisor de zonas de riesgo de la Comuna 8, Villa Hermosa"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 6.5 9 4l6 2.5L20.5 4v13.5L15 20l-6-2.5-5.5 2.5V6.5Z"/><path d="M9 4v13.5M15 6.5V20"/></svg></span><span class="brand-copy"><strong>GEOVISOR DE ZONAS DE RIESGO</strong><small>COMUNA 8 · VILLA HERMOSA</small></span></a>
+<span class="topbar-divider"></span><div class="project-label"><span class="status-dot"></span>MEDELLÍN · ANTIOQUIA</div><div class="topbar-actions"><span class="system-label">GESTIÓN DEL RIESGO</span></div>
+</header>
+<main class="workspace">
+<aside class="sidebar" aria-label="Panel de herramientas y capas">
+<section class="side-section tools-section" aria-labelledby="tools-heading"><div class="section-heading"><span class="section-index">01</span><h2 id="tools-heading">Herramientas</h2></div>
+<div class="tool-grid">
+<button class="tool-btn active" data-tool="move" type="button" title="Mover mapa"><span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M12 3l-3 3m3-3 3 3m-3 15-3-3m3 3 3-3M3 12l3-3m-3 3 3 3m15-3-3-3m3 3-3 3"/></svg></span><span>Mover</span></button>
+<button class="tool-btn" data-tool="measure" type="button" title="Medir distancia"><span class="tool-icon"><svg viewBox="0 0 24 24"><path d="m4 17 13-13 4 4L8 21H4v-4Z"/><path d="m14 7 3 3m-6 0 2 2m-6 1 3 3"/></svg></span><span>Medir</span></button>
+<button class="tool-btn" data-tool="marker" type="button" title="Agregar punto"><span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.2"/></svg></span><span>Punto</span></button>
+<button class="tool-btn" data-tool="polyline" type="button" title="Trazar línea"><span class="tool-icon"><svg viewBox="0 0 24 24"><path d="m5 18 6-12 8 12"/><circle cx="5" cy="18" r="1.5"/><circle cx="11" cy="6" r="1.5"/><circle cx="19" cy="18" r="1.5"/></svg></span><span>Línea</span></button>
+<button class="tool-btn" data-tool="polygon" type="button" title="Trazar polígono"><span class="tool-icon"><svg viewBox="0 0 24 24"><path d="m12 3 8 6-3 10H7L4 9l8-6Z"/><circle cx="12" cy="3" r="1"/></svg></span><span>Polígono</span></button>
+<button class="tool-btn danger" data-tool="clear" type="button" title="Borrar trazados"><span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg></span><span>Borrar</span></button>
+</div><p class="tool-hint" id="tool-hint" aria-live="polite">Arrastra el mapa para explorar el territorio.</p></section>
+<section class="side-section layers-section" aria-labelledby="layers-heading"><div class="section-heading"><span class="section-index">02</span><h2 id="layers-heading">Capas visibles</h2></div>
+<label class="layer-row" for="villa-layer-toggle"><input id="villa-layer-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol area-symbol"></span><span class="layer-name">Comuna Villa Hermosa</span><span id="villa-layer-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="lote-predio-toggle"><input id="lote-predio-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol parcels-symbol"></span><span class="layer-name">Lote_Predio</span><span id="lote-predio-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="amenaza-alta-toggle"><input id="amenaza-alta-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol risk-high-symbol"></span><span class="layer-name">Amenaza alta por movimiento en masa</span><span id="amenaza-alta-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="amenaza-media-toggle"><input id="amenaza-media-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol risk-medium-symbol"></span><span class="layer-name">Amenaza media por movimiento en masa</span><span id="amenaza-media-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="amenaza-baja-toggle"><input id="amenaza-baja-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol risk-low-symbol"></span><span class="layer-name">Amenaza baja por movimiento en masa</span><span id="amenaza-baja-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="amenaza-muybaja-toggle"><input id="amenaza-muybaja-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol risk-verylow-symbol"></span><span class="layer-name">Amenaza muy baja por movimiento en masa</span><span id="amenaza-muybaja-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="amenaza-inundacion-toggle"><input id="amenaza-inundacion-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol risk-flood-symbol"></span><span class="layer-name">Amenaza por inundación</span><span id="amenaza-inundacion-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="buffer-toggle"><input id="buffer-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol area-symbol"></span><span class="layer-name">Retiro obligatorio de vías</span><span id="buffer-status" class="layer-status">Cargando</span></label>
+<label class="layer-row" for="vias-toggle"><input id="vias-toggle" class="layer-toggle" type="checkbox" checked><span class="layer-symbol roads-symbol"></span><span class="layer-name">Vías</span><span id="vias-status" class="layer-status">Cargando</span></label>
+<p class="layer-note">Capas temáticas · Fuente local</p></section>
+<section class="side-section attributes-section" aria-labelledby="attributes-heading"><div class="section-heading"><span class="section-index">03</span><h2 id="attributes-heading">Atributos</h2></div><div id="lote-predio-table-wrapper" class="attribute-table-wrapper"><div class="attribute-table-empty">Sin datos cargados.</div></div></section>
+<div class="sidebar-footer"><span class="footer-mark">SIG</span><span>Gestión territorial<br><strong>Comuna 8 · Medellín</strong></span></div>
+</aside>
+<section class="map-area" aria-label="Visor cartográfico"><div class="map-toolbar"><div class="map-heading"><span class="map-kicker">ZONAS DE RIESGO · COMUNA 8</span><h1>Villa Hermosa</h1></div><span class="map-coordinate" id="map-coordinate">Seleccione una ubicación</span></div><div id="map" aria-label="Mapa interactivo de zonas de riesgo de la Comuna 8, Villa Hermosa"></div><div class="map-attribution-note">Cartografía base y servicios geográficos atribuidos en el mapa</div></section>
+</main></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/shpjs@6.2.0/dist/shp.js"></script><script src="https://calvinmetcalf.github.io/leaflet.shapefile/leaflet.shpfile.js"></script><script src="https://unpkg.com/georaster@1.6.0/dist/georaster.browser.bundle.min.js"></script><script src="https://unpkg.com/georaster-layer-for-leaflet@3.10.0/dist/georaster-layer-for-leaflet.min.js"></script><script src="scripts.js"></script>
+</body></html>
+
+
+
+
+
